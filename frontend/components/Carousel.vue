@@ -4,6 +4,7 @@
     :show-arrows="false"
     :hide-delimiter-background="true"
     :light="true"
+    height="450"
   >
     <template>
       <v-carousel-item v-for="item in items" :key="item.tile">
