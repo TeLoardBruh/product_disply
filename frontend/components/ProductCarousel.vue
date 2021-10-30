@@ -1,17 +1,19 @@
 <template>
   <v-container class="mt-4">
     <v-row>
-      <v-col sm="hidden" class="hidden-sm-and-down" lg="3" fixed>
-        <v-flex row wrap class="mx-5">
-          <div class="font-weight-bold">Filters</div>
-          <v-spacer></v-spacer>
-          <div><a>Clear</a></div>
-        </v-flex>
-        <v-divider class="mt-3 mx-5" width="80%"></v-divider>
+      <v-col sm="hidden" class="hidden-sm-and-down stickyFilter" lg="3">
+        <div class="stickyFilter">
+          <v-flex row wrap class="mx-5">
+            <div class="font-weight-bold">Filters</div>
+            <v-spacer></v-spacer>
+            <div><a>Clear</a></div>
+          </v-flex>
+          <v-divider class="mt-3 mx-5" width="80%"></v-divider>
 
-        <div class="mt-2"></div>
-        <side-drop-down type="price"  />
-        <side-drop-down type="category" />
+          <div class="mt-2"></div>
+          <side-drop-down type="price" />
+          <side-drop-down type="category" />
+        </div>
       </v-col>
       <v-col>
         <MidePage />
@@ -26,19 +28,14 @@ export default {
   components: { SideDropDown },
   data() {
     return {
-      items: [
-        { title: "Click Me" },
-        { title: "Click Me" },
-        { title: "Click Me" },
-        { title: "Click Me 2" },
-      ],
       priceRange: "",
     };
   },
-  methods: {
-    choosePriceRange(priceRange) {
-      console.log(priceRange);
-    },
-  },
 };
 </script>
+<style scoped>
+.stickyFilter {
+  position: sticky;
+  top: 6em;
+}
+</style>

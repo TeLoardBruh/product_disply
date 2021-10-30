@@ -7,7 +7,7 @@
             <span class="grey--text">Price</span>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-btn-toggle color="black" group>
+            <v-btn-toggle color="black" >
               <v-btn value="none" outlined @click="choosePriceRange('none')">
                 None
               </v-btn>
@@ -75,6 +75,11 @@ export default {
     return {
       selectedCategories: [""],
     };
+  },
+  methods: {
+    choosePriceRange(priceRange) {
+      console.log(priceRange);
+    },
   },
 };
 </script>

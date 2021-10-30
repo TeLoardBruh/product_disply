@@ -5,7 +5,7 @@
       <v-sheet color="grey lighten-4" class="pa-4">
         <v-avatar class="mb-4" color="grey darken-1" size="64"></v-avatar>
 
-        <div>john@vuetifyjs.com</div>
+        <div>The Display Product Web</div>
       </v-sheet>
 
       <v-divider></v-divider>
@@ -23,7 +23,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app>
+    <v-app-bar app class="test">
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title class="text-center">Application</v-toolbar-title>
@@ -31,8 +31,14 @@
 
     <v-main>
       <Nuxt />
+
       <v-footer dark padless>
-        <v-card flat tile class="black lighten-1 white--text text-center">
+        <v-card
+          flat
+          tile
+          class="black lighten-1 white--text text-center"
+          width="100%"
+        >
           <v-card-text>
             <v-btn
               v-for="icon in icons"
@@ -83,13 +89,14 @@ export default {
       rightDrawer: false,
       title: "Vuetify.js",
       links: [
-        ["mdi-inbox-arrow-down", "Inbox"],
-        ["mdi-send", "Send"],
-        ["mdi-delete", "Trash"],
-        ["mdi-alert-octagon", "Spam"],
+        ["mdi-inbox-arrow-down", "Home"],
+        ["mdi-send", "Login/SignUp"],
+        ["mdi-delete", "About Us"],
+        ["mdi-alert-octagon", "FAQ"],
       ],
       icons: ["mdi-facebook", "mdi-twitter", "mdi-linkedin", "mdi-instagram"],
     };
   },
 };
 </script>
+<style scoped></style>
