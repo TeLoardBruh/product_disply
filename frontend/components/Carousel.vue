@@ -18,10 +18,13 @@
                     align="center"
                     justify="center"
                   >
-                    <v-flex xs12 md6 align="center" justify="center" class="">
-                      <v-img :src="item.img" max-height="600"></v-img>
+                    <v-flex sm6 md6 align="center" justify="center" class="">
+                      <v-img
+                        :src="item.img"
+                        :max-height="$vuetify.breakpoint.xs ? 200 : 500"
+                      ></v-img>
                     </v-flex>
-                    <v-flex xs12 md6 align="center" justify="center">
+                    <v-flex sm6 md6 align="center" justify="center">
                       <h1
                         class="
                           font-weight-black
@@ -83,22 +86,19 @@ export default {
                         aliquam ut, faucibus non, euismod id, nulla. Fusce
                         convallis metus id felis luctus adipiscing. Aenean
                         massa. Vestibulum purus quam, scelerisque ut, mollis
-                        sed, nonummy id, metus. Nulla consequat massa quis enim.
-                        Praesent venenatis metus at tortor pulvinar varius.
-                        Donec venenatis vulputate lorem. Phasellus accumsan
-                        cursus velit. Pellentesque ut neque.`,
+                        sed, nonummy id, metus.`,
         },
         {
           title: "Header of product 2",
           subtitle: "Subtitle of product 2",
           img: "https://images.pexels.com/photos/4792728/pexels-photo-4792728.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-          description: `It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).`,
+          description: `It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. `,
         },
         {
           title: "Header of product 3",
           subtitle: "Subtitle of product 3",
           img: "https://images.pexels.com/photos/7504611/pexels-photo-7504611.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-          description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`,
+          description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.`,
         },
       ],
     };

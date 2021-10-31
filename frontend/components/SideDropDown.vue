@@ -7,7 +7,37 @@
             <span class="grey--text">Price</span>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-btn-toggle color="black" >
+            <v-btn-toggle color="black" v-if="buttonSize == 'small'">
+              <v-btn
+                value="none"
+                outlined
+                small
+                @click="choosePriceRange('none')"
+              >
+                None
+              </v-btn>
+
+              <v-btn
+                value="lowtohigh"
+                outlined
+                small
+                @click="choosePriceRange('lowtohigh')"
+              >
+                Low to <br />
+                High
+              </v-btn>
+
+              <v-btn
+                value="hightolow"
+                outlined
+                small
+                @click="choosePriceRange('hightolow')"
+              >
+                High to <br />
+                Low
+              </v-btn>
+            </v-btn-toggle>
+            <v-btn-toggle v-else>
               <v-btn value="none" outlined @click="choosePriceRange('none')">
                 None
               </v-btn>
@@ -70,7 +100,7 @@
 
 <script>
 export default {
-  props: ["type"],
+  props: ["type", "buttonSize"],
   data() {
     return {
       selectedCategories: [""],

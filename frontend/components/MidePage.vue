@@ -1,8 +1,5 @@
 <template>
-  <v-sheet
-    :max-width="$vuetify.breakpoint.xl ? 800 : 500"
-    :min-width="$vuetify.breakpoint.sm ? 800 : 400"
-  >
+  <v-sheet :max-width="$vuetify.breakpoint.sm ? '' : 500">
     <div>
       <strong>Category A</strong>
       <v-slide-group class="pa-4" active-class="success" show-arrows>
@@ -18,7 +15,6 @@
             :productAfterSale="product.productAfterSale"
             :productCategory="product.productCategory"
             :productDescription="product.productDescription"
-            
           />
         </v-slide-item>
       </v-slide-group>
