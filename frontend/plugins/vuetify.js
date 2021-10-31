@@ -9,7 +9,7 @@ Vue.use(Vuetify);
 
 const opts = {
   defaultAssets: {
-    icons: "mdiSvg",
+    // icons: "mdiSvg",
   },
 };
 
