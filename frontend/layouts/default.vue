@@ -27,6 +27,15 @@
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title class="text-center">Application</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <div class="my-2">
+        <v-btn small flat outlined>
+          <v-icon>mdi-format-list-bulleted-square</v-icon>
+        </v-btn>
+        <v-btn small flat outlined>
+          <v-icon>mdi-cart</v-icon>
+        </v-btn>
+      </div>
     </v-app-bar>
 
     <v-main>
