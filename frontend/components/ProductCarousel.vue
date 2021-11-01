@@ -35,6 +35,7 @@ export default {
 </script>
 <style scoped>
 .stickyFilter {
+  position: -webkit-sticky;
   position: sticky;
   top: 6em;
 }
