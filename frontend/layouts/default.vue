@@ -13,20 +13,36 @@
       </v-sheet>
 
       <v-divider></v-divider>
+      <div v-if="token">
+        <v-list v-for="[icon, text, router] in linksAuth" :key="icon">
+          <NuxtLink :to="router" style="text-decoration: none !important">
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon>{{ icon }}</v-icon>
+              </v-list-item-icon>
 
-      <v-list v-for="[icon, text, router] in links" :key="icon">
-        <NuxtLink :to="router" style="text-decoration:none !important">
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon>{{ icon }}</v-icon>
-            </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>{{ text }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </NuxtLink>
+        </v-list>
+      </div>
+      <div v-else>
+        <v-list v-for="[icon, text, router] in links" :key="icon">
+          <NuxtLink :to="router" style="text-decoration: none !important">
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon>{{ icon }}</v-icon>
+              </v-list-item-icon>
 
-            <v-list-item-content>
-              <v-list-item-title>{{ text }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </NuxtLink>
-      </v-list>
+              <v-list-item-content>
+                <v-list-item-title>{{ text }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </NuxtLink>
+        </v-list>
+      </div>
     </v-navigation-drawer>
     <!-- drawer for small device filter button -->
     <v-navigation-drawer v-model="drawerFilter" absolute temporary>
@@ -62,6 +78,7 @@
         <v-btn small text outlined>
           <v-icon>mdi-cart</v-icon>
         </v-btn>
+        <v-btn v-if="token" small text outlined @click="Logout">Logout</v-btn>
       </div>
     </v-app-bar>
 
@@ -135,8 +152,25 @@ export default {
         ["mdi-delete", "About Us", "/about"],
         ["mdi-alert-octagon", "FAQ", "/faq"],
       ],
+      linksAuth: [
+        ["mdi-inbox-arrow-down", "Home", "/"],
+        ["mdi-send", "Product", "/admin/new-product"],
+        ["mdi-delete", "About Us", "/about"],
+        ["mdi-alert-octagon", "FAQ", "/faq"],
+      ],
       icons: ["mdi-facebook", "mdi-twitter", "mdi-linkedin", "mdi-instagram"],
     };
+  },
+  computed: {
+    token() {
+      return this.$store.getters.token;
+    },
+  },
+  methods: {
+    Logout() {
+      this.$store.dispatch("logout");
+      this.$router.push("/auth");
+    },
   },
 };
 </script>

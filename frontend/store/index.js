@@ -48,16 +48,13 @@ const createStore = () => {
             .then((data) => {
               console.log(data);
               vuexContext.commit("setToken", data.data.accessToken);
-              const token = localStorage.setItem(
-                "token",
-                data.data.accessToken
-              );
-              const tokenExpiration = localStorage.setItem(
+              localStorage.setItem("token", data.data.accessToken);
+              localStorage.setItem(
                 "tokenExpiration",
-                new Date().getTime() + 3600
+                new Date().getTime() * 3600
               );
               Cookies.set("jwt", data.data.accessToken);
-              Cookies.set("tokenExpiration", 3600);
+              Cookies.set("tokenExpiration", new Date().getTime() * 3600);
             });
         }
         return axios
@@ -68,21 +65,17 @@ const createStore = () => {
           .then((data) => {
             console.log(data);
             vuexContext.commit("setToken", data.data.accessToken);
-            const token = localStorage.setItem("token", data.data.accessToken);
-            const tokenExpiration = localStorage.setItem(
+            localStorage.setItem("token", data.data.accessToken);
+            localStorage.setItem(
               "tokenExpiration",
-              new Date().getTime() + 3600
+              new Date().getTime() * 3600
             );
             Cookies.set("jwt", data.data.accessToken);
-            Cookies.set("tokenExpiration", 3600);
-            vuexContext.commit("setLogOutTimer", 3600);
+            Cookies.set("tokenExpiration", new Date().getTime() * 3600);
+            // vuexContext.commit("setLogOutTimer", 3600);
           });
       },
-      setLogOutTimer(vuexContext, duration) {
-        setTimeout(() => {
-          vuexContext.commit("clearToken");
-        }, duration);
-      },
+
       initAuth(vuexContext, req) {
         let token;
         let tokenExpiration;
@@ -102,20 +95,36 @@ const createStore = () => {
             .find((c) => c.trim().startsWith("tokenExpiration="))
             .split("=")[1];
           tokenExpiration = jwtExpiration;
-        } else {
+        } else if (process.client) {
           token = localStorage.getItem("token");
           tokenExpiration = localStorage.getItem("tokenExpiration");
-
-          if (new Date().getTime() > +tokenExpiration || !token) {
-            return;
-          }
+        } else {
+          token = null;
+          tokenExpiration = null;
         }
+        if (new Date().getTime() > +tokenExpiration || !token) {
+          vuexContext.dispatch("logout");
+          return;
+        }
+
         vuexContext.commit("setToken", token);
+      },
+      logout(vuexContext) {
+        vuexContext.commit("clearToken");
+        Cookies.remove("jwt");
+        Cookies.remove("tokenExpiration");
+        if (process.client) {
+          localStorage.removeItem("token");
+          localStorage.removeItem("tokenExperation");
+        }
       },
     },
     getters: {
       products(state) {
         return state.products;
+      },
+      token(state) {
+        return state.token;
       },
       isAuthenticated(state) {
         return state.token != null;
