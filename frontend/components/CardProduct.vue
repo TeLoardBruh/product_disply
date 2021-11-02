@@ -1,7 +1,7 @@
 <template>
   <v-slide-group show-arrows>
     <v-slide-item>
-      <v-card :loading="loading" class="mx-2 my-12 p-5" max-width="150">
+      <v-card :loading="loading" class="mx-2 my-12 p-5" max-width="250">
         <template slot="progress">
           <v-progress-linear
             color="deep-purple"
@@ -39,14 +39,11 @@
             </v-btn>
           </v-row>
         </v-card-title>
-        <v-img
-          height="50"
-          src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-        ></v-img>
+        <v-img height="" :aspect-ratio="16/9" style="object-fit: cover" :src="imgLink"></v-img>
 
         <v-card-text>
           <div class="my-4 text-subtitle-1">
-            <span class="font-weight-bold">{{ productName }}</span>
+            <span class="font-weight-bold">{{ productName }}</span> <br />
             <span class="grey--text caption">{{ productDescription }}</span>
             <br />
             <span>25%</span>
@@ -79,6 +76,7 @@ export default {
     "productAfterSale",
     "productCategory",
     "productDescription",
+    "imgLink",
   ],
   data: () => ({
     loading: false,

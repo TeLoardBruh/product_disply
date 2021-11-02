@@ -1,3 +1,4 @@
+import { User } from 'src/auth/user.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { createProductDto } from './dto/create-product.dto';
 import { GetFilterProductDto } from './dto/get-filters-product.dto';
@@ -25,15 +26,26 @@ export class ProductRepository extends Repository<Product> {
     const products = await query.getMany();
     return products;
   }
-  async createProduct(createProductDto: createProductDto): Promise<Product> {
-    const { productName, productDescription, category, productPrice, status } =
-      createProductDto;
+  async createProduct(
+    createProductDto: createProductDto,
+    user: User,
+  ): Promise<Product> {
+    const {
+      productName,
+      productDescription,
+      category,
+      productPrice,
+      status,
+      imgLink,
+    } = createProductDto;
     const product = this.create({
       productName,
       productDescription,
       productPrice,
       status,
+      imgLink,
       category,
+      user,
     });
 
     await this.save(product);

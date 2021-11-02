@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Product } from 'src/products/product.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { UserRoles } from './user-roles.enum';
 
 @Entity()
@@ -13,4 +14,7 @@ export class User {
   password: string;
   @Column({ default: 'CUSTOMER' })
   role: UserRoles;
+
+  @OneToMany((_type) => Product, (product) => product.user, { eager: true })
+  products: Product[];
 }

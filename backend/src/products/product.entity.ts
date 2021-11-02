@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Exclude } from 'class-transformer';
+import { User } from 'src/auth/user.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { ProductCategory } from './product-category.enun';
 
 @Entity()
@@ -14,5 +16,11 @@ export class Product {
   @Column()
   status: boolean;
   @Column()
+  imgLink: string;
+  @Column()
   category: ProductCategory;
+
+  @ManyToOne((_type) => User, (user) => user.products, { eager: false })
+  @Exclude({ toPlainOnly: true })
+  user: User;
 }

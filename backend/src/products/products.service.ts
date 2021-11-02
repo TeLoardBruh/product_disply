@@ -5,6 +5,7 @@ import { GetFilterProductDto } from './dto/get-filters-product.dto';
 import { ProductRepository } from './product.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './product.entity';
+import { User } from '../auth/user.entity';
 @Injectable()
 export class ProductsService {
   constructor(
@@ -24,9 +25,13 @@ export class ProductsService {
     return found;
   }
 
-  createProduct(createProductDto: createProductDto): Promise<Product> {
-    return this.productRepository.createProduct(createProductDto);
+  createProduct(
+    createProductDto: createProductDto,
+    user: User,
+  ): Promise<Product> {
+    return this.productRepository.createProduct(createProductDto,user);
   }
+  
 
   async updateProductStatus(id: string, status: boolean): Promise<Product> {
     const product = await this.getProductById(id);

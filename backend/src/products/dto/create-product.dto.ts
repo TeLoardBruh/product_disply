@@ -11,5 +11,7 @@ export class createProductDto {
   @IsNotEmpty()
   status: boolean;
   @IsNotEmpty()
+  imgLink: string;
+  @IsNotEmpty()
   category: ProductCategory;
 }

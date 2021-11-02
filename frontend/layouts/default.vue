@@ -5,7 +5,7 @@
       <v-sheet color="grey lighten-4 text-center" class="pa-4">
         <v-avatar class="mb-4" color="grey darken-1" size="64">
           <v-img
-            src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+            src="https://images.pexels.com/photos/3801990/pexels-photo-3801990.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
           ></v-img>
         </v-avatar>
 
@@ -14,16 +14,18 @@
 
       <v-divider></v-divider>
 
-      <v-list>
-        <v-list-item v-for="[icon, text] in links" :key="icon" link>
-          <v-list-item-icon>
-            <v-icon>{{ icon }}</v-icon>
-          </v-list-item-icon>
+      <v-list v-for="[icon, text, router] in links" :key="icon">
+        <NuxtLink :to="router" style="text-decoration:none !important">
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>{{ icon }}</v-icon>
+            </v-list-item-icon>
 
-          <v-list-item-content>
-            <v-list-item-title>{{ text }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>{{ text }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </NuxtLink>
       </v-list>
     </v-navigation-drawer>
     <!-- drawer for small device filter button -->
@@ -128,10 +130,10 @@ export default {
       rightDrawer: false,
       title: "Vuetify.js",
       links: [
-        ["mdi-inbox-arrow-down", "Home"],
-        ["mdi-send", "Login/SignUp"],
-        ["mdi-delete", "About Us"],
-        ["mdi-alert-octagon", "FAQ"],
+        ["mdi-inbox-arrow-down", "Home", "/"],
+        ["mdi-send", "Login/SignUp", "/auth"],
+        ["mdi-delete", "About Us", "/about"],
+        ["mdi-alert-octagon", "FAQ", "/faq"],
       ],
       icons: ["mdi-facebook", "mdi-twitter", "mdi-linkedin", "mdi-instagram"],
     };
