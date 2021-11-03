@@ -1,6 +1,6 @@
 export default function (context) {
-  console.log("[LOG MIDDLEWARE] is running");
   if (!context.store.getters.isAuthenticated) {
+    console.log("[LOG MIDDLEWARE] is running");
     context.redirect("/auth");
   }
 }

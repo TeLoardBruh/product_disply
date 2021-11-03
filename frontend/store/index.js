@@ -1,6 +1,7 @@
 import Vuex from "vuex";
 import axios from "axios";
 import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
 const createStore = () => {
   return new Vuex.Store({
     state: {
@@ -13,9 +14,11 @@ const createStore = () => {
       setToken(state, token) {
         state.token = token;
       },
+      // =======================================================
       setUserRole(state, userRole) {
         state.userRole = userRole;
       },
+      // =======================================================
       clearToken(state) {
         state.token = null;
       },
@@ -49,6 +52,7 @@ const createStore = () => {
             })
             .then((data) => {
               console.log(data);
+              console.log(data.data.accessToken);
               vuexContext.commit("setToken", data.data.accessToken);
               localStorage.setItem("token", data.data.accessToken);
               localStorage.setItem(
@@ -69,6 +73,7 @@ const createStore = () => {
           })
           .then((data) => {
             console.log(data);
+            console.log(data.data.accessToken);
             vuexContext.commit("setToken", data.data.accessToken);
             localStorage.setItem("token", data.data.accessToken);
             localStorage.setItem(
@@ -80,6 +85,7 @@ const createStore = () => {
               "tokenExpiration",
               new Date().getTime() + 1 * 3600 * 1000
             );
+            // vuexContext.commit("setLogOutTimer", 3600);
           });
       },
 
@@ -115,15 +121,22 @@ const createStore = () => {
         }
 
         vuexContext.commit("setToken", token);
-        vuexContext.commit("setUserRole", "USER");
+        const { role } = jwt.decode(token);
+        vuexContext.commit("setUserRole", role);
       },
+      // ==========================================
+      setUserRole(vuexContext, userRole) {
+        const { role } = jwt.decode(userRole);
+        vuexContext.commit("setUserRole", "role");
+      },
+      // ==========================================
       logout(vuexContext) {
         vuexContext.commit("clearToken");
         Cookies.remove("jwt");
         Cookies.remove("tokenExpiration");
         if (process.client) {
           localStorage.removeItem("token");
-          localStorage.removeItem("tokenExperation");
+          localStorage.removeItem("tokenExpiration");
         }
       },
     },
@@ -134,6 +147,7 @@ const createStore = () => {
       token(state) {
         return state.token;
       },
+
       isAuthenticated(state) {
         return state.token != null;
       },
