@@ -11,6 +11,7 @@
       <div v-for="i in highTolow" :key="i.productPrice">
         {{ i.productPrice }}
       </div> -->
+      
     </div>
     <v-container class="mt-4">
       <v-row>

@@ -205,4 +205,10 @@ export default {
   },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.stickyFilter {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 16em;
+}
+</style>
