@@ -5,7 +5,6 @@ const createStore = () => {
   return new Vuex.Store({
     state: {
       products: [],
-      token: null,
     },
     mutations: {
       setProduct(state, products) {
@@ -13,6 +12,9 @@ const createStore = () => {
       },
       setToken(state, token) {
         state.token = token;
+      },
+      setUserRole(state, userRole) {
+        state.userRole = userRole;
       },
       clearToken(state) {
         state.token = null;
@@ -51,10 +53,13 @@ const createStore = () => {
               localStorage.setItem("token", data.data.accessToken);
               localStorage.setItem(
                 "tokenExpiration",
-                new Date().getTime() * 3600
+                new Date().getTime() + 1 * 3600 * 1000
               );
               Cookies.set("jwt", data.data.accessToken);
-              Cookies.set("tokenExpiration", new Date().getTime() * 3600);
+              Cookies.set(
+                "tokenExpiration",
+                new Date().getTime() + 1 * 3600 * 1000
+              );
             });
         }
         return axios
@@ -68,11 +73,13 @@ const createStore = () => {
             localStorage.setItem("token", data.data.accessToken);
             localStorage.setItem(
               "tokenExpiration",
-              new Date().getTime() * 3600
+              new Date().getTime() + 1 * 3600 * 1000
             );
             Cookies.set("jwt", data.data.accessToken);
-            Cookies.set("tokenExpiration", new Date().getTime() * 3600);
-            // vuexContext.commit("setLogOutTimer", 3600);
+            Cookies.set(
+              "tokenExpiration",
+              new Date().getTime() + 1 * 3600 * 1000
+            );
           });
       },
 
@@ -108,6 +115,7 @@ const createStore = () => {
         }
 
         vuexContext.commit("setToken", token);
+        vuexContext.commit("setUserRole", "USER");
       },
       logout(vuexContext) {
         vuexContext.commit("clearToken");
