@@ -4,6 +4,13 @@
     <div class="pt-5 pb-5 black lighten-2 text-center white--text">
       <span><v-icon class="mb-2" color="white">mdi-home</v-icon></span>
       <span>Phnom Penh (រាជធានី​ភ្នំពេញ), Cambodia</span>
+      <!-- <div v-for="i in lowTohigh" :key="i.productPrice">
+        {{ i.productPrice }}
+      </div>
+      <br />
+      <div v-for="i in highTolow" :key="i.productPrice">
+        {{ i.productPrice }}
+      </div> -->
     </div>
     <v-container class="mt-4">
       <v-row>
@@ -22,7 +29,10 @@
           </div>
         </v-col>
         <v-col>
-          <MidePage :products="products" style="margin-bottom: 20% !important"/>
+          <MidePage
+            :products="products"
+            style="margin-bottom: 20% !important"
+          />
         </v-col>
       </v-row>
     </v-container>
@@ -42,6 +52,22 @@ export default {
     products() {
       return this.$store.getters.products;
     },
+    // lowTohigh() {
+    //   const products = this.$store.getters.products;
+    //   const test = products.sort(
+    //     (a, b) => parseFloat(a.productPrice) - parseFloat(b.productPrice)
+    //   );
+    //   console.log(test);
+    //   return test;
+    // },
+    // highTolow() {
+    //   const products = this.$store.getters.products;
+    //   const test = products.sort(
+    //     (a, b) => parseFloat(b.productPrice) - parseFloat(a.productPrice)
+    //   );
+    //   console.log(test);
+    //   return test;
+    // },
   },
 };
 </script>
