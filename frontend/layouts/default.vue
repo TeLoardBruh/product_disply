@@ -13,8 +13,23 @@
       </v-sheet>
 
       <v-divider></v-divider>
-      <div v-if="token">
+      <div v-if="token && userRole">
         <v-list v-for="[icon, text, router] in linksAuth" :key="icon">
+          <NuxtLink :to="router" style="text-decoration: none !important">
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon>{{ icon }}</v-icon>
+              </v-list-item-icon>
+
+              <v-list-item-content>
+                <v-list-item-title>{{ text }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </NuxtLink>
+        </v-list>
+      </div>
+      <div v-else-if="token && !userRole">
+        <v-list v-for="[icon, text, router] in linksUser" :key="icon">
           <NuxtLink :to="router" style="text-decoration: none !important">
             <v-list-item>
               <v-list-item-icon>
@@ -85,7 +100,7 @@
     <v-main>
       <Nuxt />
 
-      <v-footer dark padless>
+      <v-footer dark padless absolute>
         <v-card
           flat
           tile
@@ -152,9 +167,16 @@ export default {
         ["mdi-delete", "About Us", "/about"],
         ["mdi-alert-octagon", "FAQ", "/faq"],
       ],
+      linksUser: [
+        ["mdi-inbox-arrow-down", "Home", "/"],
+        ["mdi-delete", "About Us", "/about"],
+        ["mdi-alert-octagon", "FAQ", "/faq"],
+      ],
+
       linksAuth: [
         ["mdi-inbox-arrow-down", "Home", "/"],
-        ["mdi-send", "Product", "/admin/new-product"],
+        ["mdi-send", "Product", "/admin"],
+        ["mdi-send", "Create Product", "/admin/new-product"],
         ["mdi-delete", "About Us", "/about"],
         ["mdi-alert-octagon", "FAQ", "/faq"],
       ],
@@ -164,6 +186,15 @@ export default {
   computed: {
     token() {
       return this.$store.getters.token;
+    },
+    userRole() {
+      if (
+        this.$store.getters.userRole == "DEV" ||
+        this.$store.getters.userRole == "ADMIN"
+      ) {
+        return true;
+      }
+      return false;
     },
   },
   methods: {

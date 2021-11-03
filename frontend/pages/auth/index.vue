@@ -77,8 +77,7 @@ export default {
           password,
         })
         .then(() => {
-          console.log("push");
-          this.$router.push("/admin");
+          this.$router.push("/");
         });
     },
   },

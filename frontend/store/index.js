@@ -14,6 +14,15 @@ const createStore = () => {
       setToken(state, token) {
         state.token = token;
       },
+      addPost(state, product) {
+        state.products.push(product);
+      },
+      editProduct(state, editProduct) {
+        const productIndex = state.products.findIndex(
+          (post) => post.id === editProduct.id
+        );
+        state.products[productIndex] = editProduct;
+      },
       // =======================================================
       setUserRole(state, userRole) {
         state.userRole = userRole;
@@ -28,8 +37,6 @@ const createStore = () => {
         return axios
           .get("http://localhost:3000/products")
           .then((data) => {
-            // console.log(data.data);
-
             const productArray = [];
             for (const key in data.data) {
               productArray.push({ ...data.data[key], id: key });
@@ -41,6 +48,32 @@ const createStore = () => {
       setProduct(vuexContext, products) {
         vuexContext.commit("setProduct", products);
       },
+      addPost(vuexContext, product) {
+        const createProduct = { ...product };
+        const config = {
+          headers: { Authorization: `Bearer ${vuexContext.state.token}` },
+        };
+        return axios
+          .post("http://localhost:3000/products/", createProduct, config)
+          .then((data) => {
+            vuexContext.commit("addPost", { ...createProduct });
+          })
+          .catch((e) => console.log(e));
+      },
+      editProduct(vuexContext, editProduct) {
+        const config = {
+          headers: { Authorization: `Bearer ${vuexContext.state.token}` },
+        };
+
+        return axios
+          .patch(
+            "http://localhost:3000/products/" + editProduct.id + "/status",
+            { status: Boolean(editProduct.status) },
+            config
+          )
+          .then((res) => vuexContext.commit("editProduct", editProduct))
+          .catch((e) => console.log(e));
+      },
       authenticateUser(vuexContext, payload) {
         let url = "http://localhost:3000/auth";
         if (payload.isLogin) {
@@ -51,8 +84,6 @@ const createStore = () => {
               password: payload.password,
             })
             .then((data) => {
-              console.log(data);
-              console.log(data.data.accessToken);
               vuexContext.commit("setToken", data.data.accessToken);
               localStorage.setItem("token", data.data.accessToken);
               localStorage.setItem(
@@ -72,8 +103,6 @@ const createStore = () => {
             password: payload.password,
           })
           .then((data) => {
-            console.log(data);
-            console.log(data.data.accessToken);
             vuexContext.commit("setToken", data.data.accessToken);
             localStorage.setItem("token", data.data.accessToken);
             localStorage.setItem(
@@ -147,7 +176,9 @@ const createStore = () => {
       token(state) {
         return state.token;
       },
-
+      userRole(state) {
+        return state.userRole;
+      },
       isAuthenticated(state) {
         return state.token != null;
       },

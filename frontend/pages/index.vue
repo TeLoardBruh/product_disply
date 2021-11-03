@@ -22,7 +22,7 @@
           </div>
         </v-col>
         <v-col>
-          <MidePage :products="products" />
+          <MidePage :products="products" style="margin-bottom: 20% !important"/>
         </v-col>
       </v-row>
     </v-container>
@@ -32,6 +32,8 @@
 <script>
 import ProductCarousel from "../components/ProductCarousel.vue";
 export default {
+  middleware: ["checkAuth"],
+
   components: { ProductCarousel },
   data() {
     return {};
