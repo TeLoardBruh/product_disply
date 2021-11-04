@@ -60,26 +60,6 @@
       </div>
     </v-navigation-drawer>
     <!-- drawer for small device filter button -->
-    <v-navigation-drawer v-model="drawerFilter" absolute temporary>
-      <v-container class="mt-4">
-        <v-row class="m-10">
-          <v-col sm="hidden" class="stickyFilter">
-            <div class="stickyFilter">
-              <v-flex row wrap class="mx-5">
-                <div class="font-weight-bold">Filters</div>
-                <v-spacer></v-spacer>
-                <div><a>Clear</a></div>
-              </v-flex>
-              <v-divider class="mt-3 mx-5" width="80%"></v-divider>
-
-              <div class="mt-2"></div>
-              <side-drop-down type="price" buttonSize="small" />
-              <side-drop-down type="category" />
-            </div>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-navigation-drawer>
 
     <v-app-bar app class="">
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
@@ -87,9 +67,38 @@
       <v-toolbar-title class="text-center">Application</v-toolbar-title>
       <v-spacer></v-spacer>
       <div class="">
-        <v-btn small text outlined @click.stop="drawerFilter = !drawerFilter">
-          <v-icon>mdi-format-list-bulleted-square</v-icon>
-        </v-btn>
+        <v-menu
+          offset-y
+          :close-on-content-click="false"
+          left
+          nudge-left="150"
+          z-index="1"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn small text outlined v-bind="attrs" v-on="on">
+              <v-icon>mdi-filter</v-icon>
+            </v-btn>
+          </template>
+          <v-container class="mt-10 p-10 white">
+            <v-row class="m-10">
+              <v-col sm="hidden" class="stickyFilter">
+                <div class="stickyFilter">
+                  <v-flex row wrap class="mx-5">
+                    <div class="font-weight-bold">Filters</div>
+                    <v-spacer></v-spacer>
+                    <div><a>Clear</a></div>
+                  </v-flex>
+                  <v-divider class="mt-3 mx-5" width="80%"></v-divider>
+
+                  <div class="mt-2"></div>
+                  <side-drop-down type="price" buttonSize="small" />
+                  <side-drop-down type="category" />
+                </div>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-menu>
+
         <v-btn small text outlined>
           <v-icon>mdi-cart</v-icon>
         </v-btn>
@@ -98,8 +107,11 @@
     </v-app-bar>
 
     <v-main>
-      <Nuxt />
-
+      <Nuxt
+        :style="
+          this.$vuetify.breakpoint.xs ? 'margin-bottom: 50% !important' : ''
+        "
+      />
       <v-footer dark padless absolute>
         <v-card
           flat
@@ -146,6 +158,9 @@ export default {
       drawer: false,
       fixed: false,
       drawerFilter: false,
+      absolute: true,
+      opacity: 1,
+      overlay: false,
       items: [
         {
           icon: "mdi-apps",
