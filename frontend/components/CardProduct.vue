@@ -1,7 +1,12 @@
 <template>
   <v-slide-group show-arrows center-active>
     <v-slide-item>
-      <v-card :loading="loading" class="mx-2 my-12 p-5" max-width="250">
+      <v-card
+        :loading="loading"
+        class="mx-2 my-12 p-5 d-flex align-stretch"
+        max-width="250"
+        style="flex-direction: column"
+      >
         <template slot="progress">
           <v-progress-linear
             color="deep-purple"
@@ -46,7 +51,7 @@
           :src="imgLink"
         ></v-img>
 
-        <v-card-text >
+        <v-card-text>
           <div class="my-4 text-subtitle-1">
             <span class="font-weight-bold">{{ productName }}</span> <br />
             <span class="grey--text caption">{{ productDescription }}</span>
