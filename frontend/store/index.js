@@ -11,6 +11,9 @@ const createStore = () => {
       setProduct(state, products) {
         state.products = products;
       },
+      setProductsFilter(state, productsFilter) {
+        state.productsFilter = productsFilter;
+      },
       setToken(state, token) {
         state.token = token;
       },
@@ -168,11 +171,44 @@ const createStore = () => {
           localStorage.removeItem("tokenExpiration");
         }
       },
+
+      // filter logic
+      filterProduct(vuexContext, payload) {
+        if (payload == "lowtohigh") {
+          const products = vuexContext.state.products;
+          const test = products.sort(
+            (a, b) => parseFloat(a.productPrice) - parseFloat(b.productPrice)
+          );
+          // console.log(test);
+          return test;
+        } else if (payload == "hightolow") {
+          const products = vuexContext.state.products;
+          const test = products.sort(
+            (a, b) => parseFloat(b.productPrice) - parseFloat(a.productPrice)
+          );
+          // console.log(test);
+          return test;
+        } else {
+          vuexContext.dispatch("nuxtServerInit");
+        }
+      },
+      chooseCategory(vuexContext, payload) {
+        const res = vuexContext.state.products.filter((product) => {
+          return product.category === payload;
+        });
+        // console.log(res);
+        vuexContext.commit("setProductsFilter", res);
+      },
     },
     getters: {
       products(state) {
-        return state.products;
+        const result = state.products.reduce((r, a) => {
+          r[a.category] = [...(r[a.category] || []), a];
+          return r;
+        }, {});
+        return result;
       },
+
       token(state) {
         return state.token;
       },
@@ -181,6 +217,9 @@ const createStore = () => {
       },
       isAuthenticated(state) {
         return state.token != null;
+      },
+      productsFilter(state) {
+        return state.productsFilter;
       },
     },
   });

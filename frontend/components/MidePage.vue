@@ -4,7 +4,12 @@
       <strong
         >Category <span class="text-uppercase"> {{ value }} </span></strong
       >
-      <v-slide-group class="pa-4" active-class="success" show-arrows  center-active >
+      <v-slide-group
+        class="pa-4"
+        active-class="success"
+        show-arrows
+        center-active
+      >
         <v-slide-item v-for="product in index" :key="product.productId">
           <card-product
             :productName="product.productName"
@@ -33,12 +38,7 @@ export default {
   methods: {},
   computed: {
     productsComputed() {
-      const result = this.$store.getters.products.reduce((r, a) => {
-        r[a.category] = [...(r[a.category] || []), a];
-        return r;
-      }, {});
-
-      return result;
+      return this.$store.getters.products;
     },
   },
 };

@@ -91,7 +91,11 @@
                   <v-divider class="mt-3 mx-5" width="80%"></v-divider>
 
                   <div class="mt-2"></div>
-                  <side-drop-down type="price" buttonSize="small" />
+                  <side-drop-down
+                    type="price"
+                    buttonSize="small"
+                    v-on:choosePriceRange="choosePriceRange($event)"
+                  />
                   <side-drop-down type="category" />
                 </div>
               </v-col>
@@ -216,6 +220,9 @@ export default {
     Logout() {
       this.$store.dispatch("logout");
       this.$router.push("/auth");
+    },
+    choosePriceRange(priceRange) {
+      this.$store.dispatch("filterProduct", priceRange);
     },
   },
 };

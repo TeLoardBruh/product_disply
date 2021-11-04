@@ -11,7 +11,7 @@
       <div v-for="i in highTolow" :key="i.productPrice">
         {{ i.productPrice }}
       </div> -->
-      
+      <div v-on:indexListenning="choosePriceRange($event)"></div>
     </div>
     <v-container class="mt-4">
       <v-row>
@@ -49,10 +49,17 @@ export default {
   data() {
     return {};
   },
+  methods: {
+    choosePriceRange(priceRange) {
+      console.log(priceRange, "hello from index");
+      this.$emit("indexListenning", priceRange);
+    },
+  },
   computed: {
     products() {
       return this.$store.getters.products;
     },
+    test() {},
     // lowTohigh() {
     //   const products = this.$store.getters.products;
     //   const test = products.sort(

@@ -71,26 +71,14 @@
             <span class="grey--text">Category</span>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-checkbox
-              v-model="selectedCategories"
-              label="Product A"
-              value="Product A"
-            ></v-checkbox>
-            <v-checkbox
-              v-model="selectedCategories"
-              label="Product B"
-              value="Product B"
-            ></v-checkbox>
-            <v-checkbox
-              v-model="selectedCategories"
-              label="Product C"
-              value="Product C"
-            ></v-checkbox>
-            <v-checkbox
-              v-model="selectedCategories"
-              label="Product D"
-              value="Product D"
-            ></v-checkbox>
+            <v-radio-group v-model="radioGroup" @change="chooseCategory">
+              <v-radio
+                v-for="n in category"
+                :key="n.label"
+                :label="`${n.label}`"
+                :value="n.value"
+              ></v-radio>
+            </v-radio-group>
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
@@ -103,12 +91,33 @@ export default {
   props: ["type", "buttonSize"],
   data() {
     return {
-      selectedCategories: [""],
+      radioGroup: "",
+      category: [
+        {
+          label: "Category A",
+          value: "CATA",
+        },
+        {
+          label: "Category B",
+          value: "CATB",
+        },
+        {
+          label: "Category C",
+          value: "CATC",
+        },
+        {
+          label: "Category D",
+          value: "CATD",
+        },
+      ],
     };
   },
   methods: {
     choosePriceRange(priceRange) {
-      console.log(priceRange);
+      this.$emit("choosePriceRange", priceRange);
+    },
+    chooseCategory() {
+      this.$store.dispatch("chooseCategory", this.radioGroup);
     },
   },
 };
