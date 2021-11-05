@@ -29,7 +29,7 @@
 
 <script>
 export default {
-  props: ["products"],
+  // props: ["products"],
   data() {
     return {
       productFilter: [],
@@ -38,7 +38,11 @@ export default {
   methods: {},
   computed: {
     productsComputed() {
-      return this.$store.getters.products;
+      if (Object.keys(this.$store.getters.productsFilter).length > 0) {
+        return this.$store.getters.productsFilter;
+      } else {
+        return this.$store.getters.products;
+      }
     },
   },
 };

@@ -6,6 +6,7 @@ const createStore = () => {
   return new Vuex.Store({
     state: {
       products: [],
+      productsFilter: [],
     },
     mutations: {
       setProduct(state, products) {
@@ -193,6 +194,9 @@ const createStore = () => {
         }
       },
       chooseCategory(vuexContext, payload) {
+        if (payload == "") {
+          vuexContext.dispatch("nuxtServerInit");
+        }
         const res = vuexContext.state.products.filter((product) => {
           return product.category === payload;
         });
@@ -219,7 +223,11 @@ const createStore = () => {
         return state.token != null;
       },
       productsFilter(state) {
-        return state.productsFilter;
+        const result = state.productsFilter.reduce((r, a) => {
+          r[a.category] = [...(r[a.category] || []), a];
+          return r;
+        }, {});
+        return result;
       },
     },
   });

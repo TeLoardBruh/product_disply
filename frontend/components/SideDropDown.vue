@@ -93,6 +93,10 @@ export default {
     return {
       radioGroup: "",
       category: [
+         {
+          label: "None",
+          value: "",
+        },
         {
           label: "Category A",
           value: "CATA",
@@ -116,8 +120,9 @@ export default {
     choosePriceRange(priceRange) {
       this.$emit("choosePriceRange", priceRange);
     },
-    chooseCategory() {
-      this.$store.dispatch("chooseCategory", this.radioGroup);
+    chooseCategory(radioGroup) {
+      // this.$store.dispatch("chooseCategory", this.radioGroup);
+      this.$emit("chooseCategory", radioGroup);
     },
   },
 };

@@ -25,15 +25,19 @@
             <v-divider class="mt-3 mx-5" width="80%"></v-divider>
 
             <div class="mt-2"></div>
-            <side-drop-down type="price" />
-            <side-drop-down type="category" />
+            <side-drop-down
+              type="price"
+              v-on:choosePriceRange="choosePriceRange($event)"
+            />
+            <side-drop-down type="category" v-on:chooseCategory="chooseCategory($event)" />
           </div>
         </v-col>
-        <v-col>
-          <MidePage
-            :products="products"
-            style="margin-bottom: 20% !important"
-          />
+        <v-col v-if="test.length > 0">
+          asd
+          <MidePage style="margin-bottom: 20% !important" />
+        </v-col>
+        <v-col v-else>
+          <MidePage style="margin-bottom: 20% !important" />
         </v-col>
       </v-row>
     </v-container>
@@ -51,15 +55,20 @@ export default {
   },
   methods: {
     choosePriceRange(priceRange) {
-      console.log(priceRange, "hello from index");
-      this.$emit("indexListenning", priceRange);
+      this.$store.dispatch("filterProduct", priceRange);
+    },
+    chooseCategory(radioGroup) {
+      this.$store.dispatch("chooseCategory", radioGroup);
     },
   },
   computed: {
     products() {
       return this.$store.getters.products;
     },
-    test() {},
+
+    test() {
+      return this.$store.getters.productsFilter;
+    },
     // lowTohigh() {
     //   const products = this.$store.getters.products;
     //   const test = products.sort(

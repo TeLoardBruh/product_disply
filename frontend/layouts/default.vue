@@ -96,7 +96,7 @@
                     buttonSize="small"
                     v-on:choosePriceRange="choosePriceRange($event)"
                   />
-                  <side-drop-down type="category" />
+                  <side-drop-down type="category" v-on:chooseCategory="chooseCategory($event)"/>
                 </div>
               </v-col>
             </v-row>
@@ -223,6 +223,9 @@ export default {
     },
     choosePriceRange(priceRange) {
       this.$store.dispatch("filterProduct", priceRange);
+    },
+     chooseCategory(radioGroup) {
+      this.$store.dispatch("chooseCategory", radioGroup);
     },
   },
 };
