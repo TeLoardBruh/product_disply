@@ -33,7 +33,7 @@
           </div>
         </v-col>
         <v-col v-if="test.length > 0">
-          asd
+          
           <MidePage style="margin-bottom: 20% !important" />
         </v-col>
         <v-col v-else>
